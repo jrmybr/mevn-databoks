@@ -39,8 +39,8 @@ const keys = require('./server/secret/keys')
 // }
 
 require('./server/models/User');
-require('./server/models/Article');
-require('./server/models/Comment');
+// require('./server/models/Article');
+// require('./server/models/Comment');
 require('./server/config/passport');
 
 app.use(require('./server/routes'));

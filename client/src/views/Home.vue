@@ -1,84 +1,84 @@
 <template>
-  <div class="home-page">
-    <div class="banner">
-      <div class="container">
-        <h1 class="logo-font">conduit</h1>
-        <p>A place to share your knowledge.</p>
+  <section id='home-page'>
+    <div id="home-main">
+      <div id="title-wrapper">
+        <h1> Databoks </h1>
+        <h2> Create your 2.0 fitness event </h2>
+        <button type="button" class="more-white">Show more</button>
       </div>
-    </div>
-    <div class="container page">
-      <div class="row">
-        <div class="col-md-9">
-          <div class="feed-toggle">
-            <ul class="nav nav-pills outline-active">
-              <li v-if="isAuthenticated" class="nav-item">
-                <router-link
-                  :to="{name: 'home-my-feed'}"
-                  class="nav-link"
-                  active-class="active">
-                  Your Feed
-                </router-link>
-              </li>
-              <li class="nav-item">
-                <router-link
-                  :to="{name: 'home'}"
-                  exact
-                  class="nav-link"
-                  active-class="active">
-                  Global Feed
-                </router-link>
-              </li>
-              <li class="nav-item" v-if="tag">
-                <router-link
-                  :to="{name: 'home-tag', params: {tag}}"
-                  class="nav-link"
-                  active-class="active">
-                  <i class="ion-pound"></i>
-                  {{ tag }}
-                </router-link>
-              </li>
-            </ul>
-          </div>
-          <router-view></router-view>
-        </div>
-        <div class="col-md-3">
-          <div class="sidebar">
-            <p>Popular Tags</p>
-            <div class="tag-list">
-              <RwvTag
-                v-for="(tag, index) in tags"
-                :name="tag"
-                :key="index">
-              </RwvTag>
-            </div>
-          </div>
-        </div>
+
+      <div id="home-form">
+        <h3>New to Databoks?</h3>
+        <h4>Create your free account to get started</h4>
+        <signupForm></signupForm>
+
+        <hr>
+
+        <button v-on:click="onGoogle" type="button">Sign up with Google</button>
+        <!-- <button type="button">Sign up with Facebook</button> -->
       </div>
-    </div>
   </div>
+  </section>
 </template>
 
 <script>
   import { mapGetters } from 'vuex'
-  import RwvTag from '@/components/VTag'
-  import { FETCH_TAGS } from '@/store/actions.type'
+  import signupForm from '@/components/SignupForm'
+  // import { FETCH_TAGS } from '@/store/actions.type'
 
   export default {
     name: 'home',
     components: {
-      RwvTag
-    },
-    mounted () {
-      this.$store.dispatch(FETCH_TAGS)
+      signupForm
     },
     computed: {
       ...mapGetters([
-        'isAuthenticated',
-        'tags'
-      ]),
-      tag () {
-        return this.$route.params.tag
-      }
+        'isAuthenticated'
+      ])
     }
   }
 </script>
+
+  <style scoped lang='sass'>
+    @import "./../assets/styles/colors"
+    @import "./../assets/styles/mixins"
+
+    #home-page
+      height: auto
+      min-height: 90vh
+      background-color: $blue
+      color: $white
+      padding-bottom: 50px
+      #home-main
+        display: flex
+        // justify-content: space-around
+        align-items: center
+        flex-direction: column
+        // min-height: 90%
+        @media screen and ('min-width': 768px)
+          flex-direction: row
+        #title-wrapper
+          @include home-title
+          margin: 50px
+          text-align: center
+          h2
+            font-size: 90%
+          button.more-white
+            @include button-more
+        #home-form
+          display: flex
+          flex-direction: column
+          min-width: 66%
+          h3
+            margin-bottom: 0
+            letter-spacing: -1px
+          h4
+            margin-top: 10px
+        //   form
+        //     display: flex
+        //     flex-direction: column
+        //     input
+        //       @include input-style
+
+
+  </style>

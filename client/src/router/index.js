@@ -5,39 +5,39 @@ import RwvHome from '@/views/Home'
 import RwvLogin from '@/views/Login'
 import RwvRegister from '@/views/Register'
 import RwvProfile from '@/views/Profile'
-import RwvProfileArticles from '@/views/ProfileArticles'
-import RwvProfileFavorited from '@/views/ProfileFavorited'
+// import RwvProfileArticles from '@/views/ProfileArticles'
+// import RwvProfileFavorited from '@/views/ProfileFavorited'
 import RwvSettings from '@/views/Settings'
-import RwvArticle from '@/views/Article'
-import RwvArticleEdit from '@/views/ArticleEdit'
-import RwvHomeGlobal from '@/views/HomeGlobal'
-import RwvHomeTag from '@/views/HomeTag'
-import RwvHomeMyFeed from '@/views/HomeMyFeed'
+// import RwvArticle from '@/views/Article'
+// import RwvArticleEdit from '@/views/ArticleEdit'
+// import RwvHomeGlobal from '@/views/HomeGlobal'
+// import RwvHomeTag from '@/views/HomeTag'
+// import RwvHomeMyFeed from '@/views/HomeMyFeed'
 
 Vue.use(Router)
 
 export default new Router({
-  mode: 'history',
   routes: [
     {
       path: '/',
+      name: 'home',
       component: RwvHome,
       children: [
-        {
-          path: '',
-          name: 'home',
-          component: RwvHomeGlobal
-        },
-        {
-          path: 'my-feed',
-          name: 'home-my-feed',
-          component: RwvHomeMyFeed
-        },
-        {
-          path: 'tag/:tag',
-          name: 'home-tag',
-          component: RwvHomeTag
-        }
+        // {
+        //   path: '',
+        //   name: 'home',
+        //   component: RwvHomeGlobal
+        // }
+        // {
+        //   path: 'my-feed',
+        //   name: 'home-my-feed',
+        //   component: RwvHomeMyFeed
+        // },
+        // {
+        //   path: 'tag/:tag',
+        //   name: 'home-tag',
+        //   component: RwvHomeTag
+        // }
       ]
     },
     {
@@ -61,30 +61,18 @@ export default new Router({
     {
       path: '/@:username',
       component: RwvProfile,
-      children: [
-        {
-          path: '',
-          name: 'profile',
-          component: RwvProfileArticles
-        },
-        {
-          name: 'profile-favorites',
-          path: 'favorites',
-          component: RwvProfileFavorited
-        }
-      ]
-    },
-    {
-      name: 'article',
-      path: '/articles/:slug',
-      component: RwvArticle,
-      props: true
-    },
-    {
-      name: 'article-edit',
-      path: '/editor/:slug?',
-      props: true,
-      component: RwvArticleEdit
+      // children: [
+      //   {
+      //     path: '',
+      //     name: 'profile',
+      //     component: RwvProfileArticles
+      //   },
+      //   {
+      //     name: 'profile-favorites',
+      //     path: 'favorites',
+      //     component: RwvProfileFavorited
+      //   }
+      // ]
     }
   ]
 })

@@ -9,7 +9,8 @@
               Have an account?
             </router-link>
           </p>
-          <ul v-if="errors" class="error-messages">
+          <signupForm></signupForm>
+          <!-- <ul v-if="errors" class="error-messages">
             <li v-for="(v, k) in errors" :key="k">{{k}} {{ v | error }}</li>
           </ul>
           <form v-on:submit="onSubmit">
@@ -25,7 +26,7 @@
             <button class="btn btn-lg btn-primary pull-xs-right">
               Sign up
             </button>
-          </form>
+          </form> -->
         </div>
       </div>
     </div>
@@ -33,6 +34,7 @@
 </template>
 <script>
 import { mapState } from 'vuex'
+import signupForm from '@/components/SignupForm'
 import { REGISTER } from '@/store/actions.type'
 
 export default {
@@ -44,21 +46,23 @@ export default {
       password: ''
     }
   },
+  components: {
+    signupForm
+  },
   computed: {
     ...mapState({
       errors: state => state.auth.errors
     })
-  },
-  methods: {
-    onSubmit () {
-      console.log('on submit')
-      this.$store.dispatch(REGISTER, {
-        email: this.email,
-        password: this.password,
-        username: this.username
-      })
-      .then(() => this.$router.push({ name: 'home' }))
-    }
-  }
+  }//,
+  // methods: {
+  //   onSubmit () {
+  //     this.$store.dispatch(REGISTER, {
+  //       email: this.email,
+  //       password: this.password,
+  //       username: this.username
+  //     })
+  //     .then(() => this.$router.push({ name: 'home' }))
+  //   }
+  // }
 }
 </script>
