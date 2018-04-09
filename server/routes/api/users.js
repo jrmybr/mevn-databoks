@@ -20,6 +20,12 @@ router.put('/user', auth.required, function(req, res, next){
     if(typeof req.body.user.username !== 'undefined'){
       user.username = req.body.user.username;
     }
+    if(typeof req.body.user.firstname !== 'undefined'){
+      user.firstname = req.body.user.firstname;
+    }
+    if(typeof req.body.user.lastname !== 'undefined'){
+      user.lastname = req.body.user.lastname;
+    }
     if(typeof req.body.user.email !== 'undefined'){
       user.email = req.body.user.email;
     }
@@ -62,8 +68,11 @@ router.post('/users/login', function(req, res, next){
 
 router.post('/users', function(req, res, next){
   var user = new User();
-  user.username = req.body.user.username;
+  // user.username = req.body.user.username;
+  user.firstname = req.body.user.firstname;
+  user.lastname = req.body.user.lastname;
   user.email = req.body.user.email;
+  user.setUsername();
   user.setPassword(req.body.user.password);
 
   user.save().then(function(){
