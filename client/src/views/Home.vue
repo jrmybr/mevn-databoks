@@ -14,7 +14,7 @@
 
         <hr>
 
-        <button v-on:click="onGoogle" type="button">Sign up with Google</button>
+        <!-- <button v-on:click="onGoogle" type="button">Sign up with Google</button> -->
         <!-- <button type="button">Sign up with Facebook</button> -->
       </div>
   </div>

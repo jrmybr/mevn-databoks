@@ -11,7 +11,7 @@ var UserSchema = new mongoose.Schema({
   email: {type: String, lowercase: true, unique: true, required: [true, "can't be blank"], match: [/\S+@\S+\.\S+/, 'is invalid'], index: true},
   bio: String,
   image: String, // favorites: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Article' }],
-  following: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
+  // following: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
   hash: String,
   salt: String,
   firstConnection: {type: Boolean, default: true}
@@ -69,26 +69,15 @@ UserSchema.methods.setUsername = function() {
   .then(res => {
     this.username = `${this.firstname}.${this.lastname}.${res.length}`
   })
-  console.log(this.username);
 }
-// UserSchema.methods.favorite = function(id){
-//   if(this.favorites.indexOf(id) === -1){
-//     this.favorites.push(id);
-//   }
-//
-//   return this.save();
-// };
-//
-// UserSchema.methods.unfavorite = function(id){
-//   this.favorites.remove(id);
-//   return this.save();
-// };
-//
-// UserSchema.methods.isFavorite = function(id){
-//   return this.favorites.some(function(favoriteId){
-//     return favoriteId.toString() === id.toString();
-//   });
-// };
+
+UserSchema.methods.getFullName = function() {
+  return `${this.firstname[0].toUpperCase()}${this.firstname.slice(1)} ${this.lastname.toUpperCase()}`
+}
+
+UserSchema.methods.getShortName = function() {
+  return `${this.firstname[0].toUpperCase()}. ${this.lastname.toUpperCase()}`
+}
 
 UserSchema.methods.follow = function(id){
   if(this.following.indexOf(id) === -1){
@@ -109,20 +98,4 @@ UserSchema.methods.isFollowing = function(id){
   });
 };
 
-
-
 const users = mongoose.model('User', UserSchema);
-
-// UserSchema.post('save', (next) => {
-//   const self = this
-//   console.log(this.firstname, this.lastname);
-//   user.where({username: {"$regex": `${self.firstname}.${self.lastname}`}})
-//     .then((res) => {
-//       console.log(self.firstname, self.lastname);
-//       if(!this.username) {
-//         self.username = `${self.firstname}.${self.lastname}.${res.length + 1}`
-//       }
-//       next()
-//     })
-//
-// })
