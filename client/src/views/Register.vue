@@ -1,33 +1,15 @@
 <template>
   <div class="auth-page">
     <div class="container page">
-      <div class="row">
-        <div class="col-md-6 offset-md-3 col-xs-12">
-          <h1 class="text-xs-center">Sign up</h1>
-          <p class="text-xs-center">
-            <router-link :to="{ name: 'login' }">
-              Have an account?
-            </router-link>
-          </p>
-          <signupForm></signupForm>
-          <!-- <ul v-if="errors" class="error-messages">
-            <li v-for="(v, k) in errors" :key="k">{{k}} {{ v | error }}</li>
-          </ul>
-          <form v-on:submit="onSubmit">
-            <fieldset class="form-group">
-              <input class="form-control form-control-lg" type="text" v-model="username" placeholder="Username">
-            </fieldset>
-            <fieldset class="form-group">
-              <input class="form-control form-control-lg" type="text" v-model="email" placeholder="Email">
-            </fieldset>
-            <fieldset class="form-group">
-              <input class="form-control form-control-lg" type="password" v-model="password" placeholder="Password">
-            </fieldset>
-            <button class="btn btn-lg btn-primary pull-xs-right">
-              Sign up
-            </button>
-          </form> -->
-        </div>
+      <div id="login-header">
+        <h1> New to Databoks? </h1>
+        <p> Create your profile for free </p>
+      </div>
+      <signupForm></signupForm>
+      <div id="login-foot">
+        <router-link :to="{ name: 'login' }">
+          Have an account?
+        </router-link>
       </div>
     </div>
   </div>
@@ -53,16 +35,34 @@ export default {
     ...mapState({
       errors: state => state.auth.errors
     })
-  }//,
-  // methods: {
-  //   onSubmit () {
-  //     this.$store.dispatch(REGISTER, {
-  //       email: this.email,
-  //       password: this.password,
-  //       username: this.username
-  //     })
-  //     .then(() => this.$router.push({ name: 'home' }))
-  //   }
-  // }
+  }
 }
 </script>
+
+<style scoped lang="sass">
+  @import './../assets/styles/colors'
+  @import './../assets/styles/mixins'
+  .auth-page
+    min-height: 100vh
+    background-color: $blue
+    color: $white
+    .container
+      min-height: 80vh
+      padding: 10vh 0
+      display: flex
+      justify-content: center
+      align-items: center
+      flex-direction: column
+      h1
+        @include home-title
+        letter-spacing: -2px
+        text-transform: capitalize
+        font-size: 200%
+      #login-foot
+        font-size: 12px
+        a
+          color: $white
+          text-decoration: none
+          &:hover
+            text-decoration: underline
+</style>

@@ -1,14 +1,11 @@
 <template>
   <div class="auth-page">
     <div class="container page">
-      <div class="row">
-        <div class="col-md-6 offset-md-3 col-xs-12">
-          <h1 class="text-xs-center">Sign in</h1>
-          <p class="text-xs-center">
-            <router-link :to="{ name: 'register' }">
-              Need an account?
-            </router-link>
-          </p>
+          <div id="login-header">
+            <h1> Welcome to Databoks </h1>
+            <p> Please, login with your email address </p>
+          </div>
+          <div id="login-form">
           <ul v-if="errors" class="error-messages">
             <li
               v-for="(v, k) in errors"
@@ -16,27 +13,32 @@
               {{k}} {{ v | error }}
             </li>
           </ul>
+
           <form v-on:submit="onSubmit(email, password)">
-            <fieldset class="form-group">
               <input
-                class="form-control form-control-lg"
+                class=""
                 type="text"
                 v-model="email"
                 placeholder="Email">
-            </fieldset>
-            <fieldset class="form-group">
               <input
-                class="form-control form-control-lg"
+                class=""
                 type="password"
                 v-model="password"
                 placeholder="Password">
-            </fieldset>
-            <button class="btn btn-lg btn-primary pull-xs-right">
+            <button class="">
               Sign in
             </button>
           </form>
         </div>
-      </div>
+        <div id="login-foot">
+          <router-link :to="{ name: 'home'}">
+            Forgot your password ?
+          </router-link>
+          --
+          <router-link :to="{ name: 'register'}">
+            Create an account
+          </router-link>
+        </div>
     </div>
   </div>
 </template>
@@ -66,3 +68,40 @@ export default {
   }
 }
 </script>
+
+<style scoped lang="sass">
+@import './../assets/styles/colors'
+@import './../assets/styles/mixins'
+.auth-page
+  min-height: 100vh
+  background-color: $blue
+  color: $white
+  .container
+    min-height: 80vh
+    padding: 10vh 0
+    display: flex
+    justify-content: center
+    align-items: center
+    flex-direction: column
+    h1
+      @include home-title
+      letter-spacing: -2px
+      text-transform: capitalize
+      font-size: 200%
+    form
+      display: flex
+      flex-direction: column
+      input
+        @include input-style
+      button
+        @include button-style
+        &:hover
+          background-color: #3336
+    #login-foot
+      font-size: 12px
+      a
+        color: $white
+        text-decoration: none
+        &:hover
+          text-decoration: underline
+</style>

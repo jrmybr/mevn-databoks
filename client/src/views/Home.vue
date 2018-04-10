@@ -2,9 +2,15 @@
   <section id='home-page'>
     <div id="home-main">
       <div id="title-wrapper">
-        <h1> Databoks </h1>
-        <h2> Create your 2.0 fitness event </h2>
-        <button type="button" class="more-white">Show more</button>
+        <div class="on-top">
+          <h1> Databoks </h1>
+          <h2> An application to make athletes life better </h2>
+          <button type="button" class="more-white">Show more</button>
+        </div>
+        <div class="on-bottom scroll-down">
+          <p>Scroll down to register</p>
+          <span class="fa fa-angle-down"></span>
+        </div>
       </div>
 
       <div id="home-form">
@@ -45,27 +51,50 @@
 
     #home-page
       height: auto
-      min-height: 90vh
+      min-height: 100vh
       background-color: $blue
       color: $white
       padding-bottom: 50px
+      @media screen and ('min-width': 768px)
+        display: flex
       #home-main
         display: flex
-        // justify-content: space-around
         align-items: center
         flex-direction: column
-        // min-height: 90%
+        min-height: 90%
         @media screen and ('min-width': 768px)
           flex-direction: row
+          min-width: 100%
         #title-wrapper
-          @include home-title
-          margin: 50px
+          display: flex
+          flex-direction: column
+          justify-content: space-between
+          min-height: 80vh
+          .scroll-down
+            margin-bottom: 25px
+            p
+              margin: 0
+            .fa
+              font-size: 30px
+          @media screen and ('min-width': 768px)
+            min-height: auto
+            margin: 50px 0
+            min-width: 50%
+            display: block
+            .scroll-down
+              display: none
+          h1
+            @include home-title
+          margin: 150px 50px 0px 50px
           text-align: center
           h2
-            font-size: 90%
+            font-size: 80%
           button.more-white
             @include button-more
         #home-form
+          @media screen and ('min-width': 768px)
+            min-width: 40%
+            padding: 0 20px
           display: flex
           flex-direction: column
           min-width: 66%

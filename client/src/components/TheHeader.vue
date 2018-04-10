@@ -1,6 +1,6 @@
 <template>
   <div id="home-header">
-    <div id="header-title"> Databoks </div>
+    <div id="header-title"> <router-link :to="{ name: 'home'}">Databoks</router-link></div>
     <div id="header-link" v-if="!isAuthenticated">
       <router-link class="nav-link"
         active-class="active"
@@ -12,14 +12,14 @@
         active-class="active"
         exact
         :to="{ name: 'login' }">
-        <span class="fa fa-user"></span> Sign in
+        <span class="fa fa-sign-in-alt"></span> Sign in
       </router-link>
       <router-link
         class="nav-link"
         active-class="active"
         exact
         :to="{ name: 'register' }">
-        <span class="fa fa-user"></span> Sign up
+        <span class="far fa-user"></span> Sign up
       </router-link>
     </div>
     <div id="header-link" v-if="isAuthenticated">
@@ -76,6 +76,9 @@
       min-width: 40%
       @media screen and ('min-width': 768px)
         min-width: 60%
+      a, a:hover
+        color: $white
+        text-decoration: none
     #header-link
       display: flex
       flex-grow: 2
