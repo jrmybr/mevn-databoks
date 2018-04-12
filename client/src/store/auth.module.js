@@ -28,6 +28,7 @@ const actions = {
           resolve(data)
         })
         .catch(({response}) => {
+          console.log(response.data.errors)
           context.commit(SET_ERROR, response.data.errors)
         })
     })

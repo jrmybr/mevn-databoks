@@ -49,12 +49,21 @@
     @import "./../assets/styles/colors"
     @import "./../assets/styles/mixins"
 
+    @keyframes upndown
+      0%
+        margin-bottom: 0px
+      50%
+        margin-bottom: 15px
+      100%
+        margin-bottom: 0px
+
+
     #home-page
       height: auto
       min-height: 100vh
       background-color: $blue
       color: $white
-      padding-bottom: 50px
+      //padding-bottom: 50px
       @media screen and ('min-width': 768px)
         display: flex
       #home-main
@@ -72,10 +81,14 @@
           min-height: 80vh
           .scroll-down
             margin-bottom: 25px
+            animation-name: upndown
+            animation-duration: 2s
+            animation-iteration-count: infinite
             p
               margin: 0
             .fa
               font-size: 30px
+
           @media screen and ('min-width': 768px)
             min-height: auto
             margin: 50px 0
@@ -103,11 +116,5 @@
             letter-spacing: -1px
           h4
             margin-top: 10px
-        //   form
-        //     display: flex
-        //     flex-direction: column
-        //     input
-        //       @include input-style
-
 
   </style>

@@ -6,13 +6,7 @@
             <p> Please, login with your email address </p>
           </div>
           <div id="login-form">
-          <ul v-if="errors" class="error-messages">
-            <li
-              v-for="(v, k) in errors"
-              :key="k">
-              {{k}} {{ v | error }}
-            </li>
-          </ul>
+          <listErrors></listErrors>
 
           <form v-on:submit="onSubmit(email, password)">
               <input
@@ -45,6 +39,7 @@
 <script>
 import { mapState } from 'vuex'
 import { LOGIN } from '@/store/actions.type'
+import listErrors from '@/components/ListErrors'
 
 export default {
   name: 'RwvLogin',
@@ -65,6 +60,9 @@ export default {
     ...mapState({
       errors: state => state.auth.errors
     })
+  },
+  components: {
+    listErrors
   }
 }
 </script>
