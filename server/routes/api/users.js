@@ -3,6 +3,9 @@ var router = require('express').Router();
 var passport = require('passport');
 var User = mongoose.model('User');
 var auth = require('../auth');
+const sendMail = require('./../../config/nodemailer')
+const keys = require('./../../secret/keys')
+const mails = require('./../../models/mails/mails')
 
 router.get('/user', auth.required, function(req, res, next){
   User.findById(req.payload.id).then(function(user){
@@ -68,13 +71,17 @@ router.post('/users/login', function(req, res, next){
 
 router.post('/users', function(req, res, next){
   var user = new User();
-  // user.username = req.body.user.username;
   user.firstname = req.body.user.firstname;
   user.lastname = req.body.user.lastname;
   user.email = req.body.user.email;
   user.setUsername();
   user.setPassword(req.body.user.password);
-
+  const transporter = sendMail
+  transporter.sendMail(mails.welcome(req.body.user), (error, info) => {
+      if (error) {
+          return console.log(error);
+      }
+  });
   user.save().then(function(){
     return res.json({user: user.toAuthJSON()});
   }).catch(next);
