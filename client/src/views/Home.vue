@@ -3,9 +3,10 @@
     <div id="home-main">
       <div id="title-wrapper">
         <div class="on-top">
-          <h1> Databoks </h1>
-          <h2> An application to make athletes life better </h2>
-          <button type="button" class="more-white">Show more</button>
+          <h1><span class="bg-orange">Data</span>boks </h1>
+          <h2> Bring your fitness in digital world </h2>
+          <router-link class="more-white" :to="{ name: 'about'}">Show more</router-link>
+          <!-- <button type="button" class="more-white">Show more</button> -->
         </div>
         <div class="on-bottom scroll-down">
           <p>Scroll down to register</p>
@@ -100,10 +101,17 @@
             @include home-title
           margin: 150px 50px 0px 50px
           text-align: center
+          span.bg-orange
+            background-color: $orange
+            padding: 5px
           h2
-            font-size: 80%
-          button.more-white
+            font-size: 100%
+            margin-bottom: 25px
+          a.more-white
             @include button-more
+            min-width: 12.5%
+            padding: 15px 5px
+            text-decoration: none
         #home-form
           @media screen and ('min-width': 768px)
             min-width: 40%

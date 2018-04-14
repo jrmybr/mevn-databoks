@@ -8,6 +8,7 @@ import RwvProfile from '@/views/Profile'
 // import RwvProfileArticles from '@/views/ProfileArticles'
 // import RwvProfileFavorited from '@/views/ProfileFavorited'
 import RwvSettings from '@/views/Settings'
+import About from '@/views/About'
 // import RwvArticle from '@/views/Article'
 // import RwvArticleEdit from '@/views/ArticleEdit'
 // import RwvHomeGlobal from '@/views/HomeGlobal'
@@ -39,6 +40,11 @@ export default new Router({
         //   component: RwvHomeTag
         // }
       ]
+    },
+    {
+      name: 'about',
+      path: '/about',
+      component: About
     },
     {
       name: 'login',

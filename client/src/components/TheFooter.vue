@@ -24,7 +24,7 @@ export default {
     @media screen and ('min-width': 768px)
       flex-direction: row
       background-color: #3334
-      position: absolute
+      position: fixed
       bottom: 0
     p
       min-width: 50%

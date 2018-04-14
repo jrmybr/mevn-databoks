@@ -1,6 +1,6 @@
 <template>
   <div id="home-header">
-    <div id="header-title"> <router-link :to="{ name: 'home'}">Databoks</router-link></div>
+    <div id="header-title"> <router-link :to="{ name: 'home'}"><span class="bg-orange">Data</span>boks</router-link></div>
     <div id="header-link" v-if="!isAuthenticated">
       <router-link class="nav-link"
         active-class="active"
@@ -74,6 +74,9 @@
     #header-title
       @include header-title
       min-width: 40%
+      span.bg-orange
+        background-color: transparentize($orange, 0.1)
+        padding: 5px
       @media screen and ('min-width': 768px)
         min-width: 60%
       a, a:hover
