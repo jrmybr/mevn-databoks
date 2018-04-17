@@ -1,20 +1,21 @@
-var mongoose = require('mongoose');
-var uniqueValidator = require('mongoose-unique-validator');
-var crypto = require('crypto');
-var jwt = require('jsonwebtoken');
+const mongoose = require('mongoose');
+const uniqueValidator = require('mongoose-unique-validator');
+const crypto = require('crypto');
+const jwt = require('jsonwebtoken');
 const keys = require('../secret/keys');
 
 var UserSchema = new mongoose.Schema({
+  // _id: mongoose.Schema.Types.ObjectId,
   username: {type: String, lowercase: true, unique: true, match: [/^[a-zA-Z0-9\.]+$/, 'is invalid'], index: true},
   firstname: {type: String, lowercase: true, required: [true, "can't be blank"], match: [/^[a-zA-Z\-]+$/, 'is invalid']},
   lastname: {type: String, lowercase: true, required: [true, "can't be blank"], match: [/^[a-zA-Z\-]+$/, 'is invalid']},
   email: {type: String, lowercase: true, unique: true, required: [true, "can't be blank"], match: [/\S+@\S+\.\S+/, 'is invalid'], index: true},
-  bio: String,
-  image: String, // favorites: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Article' }],
-  // following: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
   hash: String,
   salt: String,
-  firstConnection: {type: Boolean, default: true}
+  // firstConnection: {type: Boolean, default: true},
+  address: {type: String, default: ''},
+  codePostal: {type: String, default: ''},
+  city: {type: String, default: ''},
 }, {timestamps: true});
 
 UserSchema.plugin(uniqueValidator, {message: 'is already taken.'});
@@ -48,8 +49,6 @@ UserSchema.methods.toAuthJSON = function(){
     lastname: this.lastname,
     email: this.email,
     token: this.generateJWT(),
-    bio: this.bio,
-    image: this.image
   };
 };
 
@@ -58,9 +57,12 @@ UserSchema.methods.toProfileJSONFor = function(user){
     username: this.username,
     firstname: this.firstname,
     lastname: this.lastname,
-    bio: this.bio,
-    image: this.image || 'https://static.productionready.io/images/smiley-cyrus.jpg',
-    following: user ? user.isFollowing(this._id) : false
+    email: this.email,
+    address: this.address,
+    codePostal: this.codePostal,
+    city: this.city,
+    fullname: this.getFullName()
+    // firstConnection: this.firstConnection,
   };
 };
 
@@ -78,24 +80,5 @@ UserSchema.methods.getFullName = function() {
 UserSchema.methods.getShortName = function() {
   return `${this.firstname[0].toUpperCase()}. ${this.lastname.toUpperCase()}`
 }
-
-UserSchema.methods.follow = function(id){
-  if(this.following.indexOf(id) === -1){
-    this.following.push(id);
-  }
-
-  return this.save();
-};
-
-UserSchema.methods.unfollow = function(id){
-  this.following.remove(id);
-  return this.save();
-};
-
-UserSchema.methods.isFollowing = function(id){
-  return this.following.some(function(followId){
-    return followId.toString() === id.toString();
-  });
-};
 
 const users = mongoose.model('User', UserSchema);

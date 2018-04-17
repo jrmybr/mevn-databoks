@@ -1,5 +1,6 @@
 <template>
   <div class="auth-page">
+    <RwvHeader></RwvHeader>
     <div class="container page">
       <div id="login-header">
         <h1> New to Databoks? </h1>
@@ -12,12 +13,15 @@
         </router-link>
       </div>
     </div>
+    <RwvFooter></RwvFooter>
   </div>
 </template>
 <script>
 import { mapState } from 'vuex'
 import signupForm from '@/components/SignupForm'
 import { REGISTER } from '@/store/actions.type'
+import RwvHeader from '@/components/TheHeader'
+import RwvFooter from '@/components/TheFooter'
 
 export default {
   name: 'RwvRegister',
@@ -29,7 +33,9 @@ export default {
     }
   },
   components: {
-    signupForm
+    signupForm,
+    RwvHeader,
+    RwvFooter
   },
   computed: {
     ...mapState({

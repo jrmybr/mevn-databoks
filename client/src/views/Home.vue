@@ -1,5 +1,6 @@
 <template>
   <section id='home-page'>
+    <RwvHeader></RwvHeader>
     <div id="home-main">
       <div id="title-wrapper">
         <div class="on-top">
@@ -25,18 +26,23 @@
         <!-- <button type="button">Sign up with Facebook</button> -->
       </div>
   </div>
+  <RwvFooter></RwvFooter>
   </section>
 </template>
 
 <script>
   import { mapGetters } from 'vuex'
   import signupForm from '@/components/SignupForm'
+  import RwvHeader from '@/components/TheHeader'
+  import RwvFooter from '@/components/TheFooter'
   // import { FETCH_TAGS } from '@/store/actions.type'
 
   export default {
     name: 'home',
     components: {
-      signupForm
+      signupForm,
+      RwvHeader,
+      RwvFooter
     },
     computed: {
       ...mapGetters([

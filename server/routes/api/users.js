@@ -2,6 +2,7 @@ var mongoose = require('mongoose');
 var router = require('express').Router();
 var passport = require('passport');
 var User = mongoose.model('User');
+var Profile = mongoose.model('Profile');
 var auth = require('../auth');
 const sendMail = require('./../../config/nodemailer')
 const keys = require('./../../secret/keys')
@@ -32,11 +33,14 @@ router.put('/user', auth.required, function(req, res, next){
     if(typeof req.body.user.email !== 'undefined'){
       user.email = req.body.user.email;
     }
-    if(typeof req.body.user.bio !== 'undefined'){
-      user.bio = req.body.user.bio;
+    if(typeof req.body.user.address !== 'undefined'){
+      user.address = req.body.user.address;
     }
-    if(typeof req.body.user.image !== 'undefined'){
-      user.image = req.body.user.image;
+    if(typeof req.body.user.codePostal !== 'undefined'){
+      user.codePostal = req.body.user.codePostal;
+    }
+    if(typeof req.body.user.city !== 'undefined'){
+      user.city = req.body.user.city;
     }
     if(typeof req.body.user.password !== 'undefined'){
       user.setPassword(req.body.user.password);
@@ -76,13 +80,17 @@ router.post('/users', function(req, res, next){
   user.email = req.body.user.email;
   user.setUsername();
   user.setPassword(req.body.user.password);
-  const transporter = sendMail
-  transporter.sendMail(mails.welcome(req.body.user), (error, info) => {
-      if (error) {
-          return console.log(error);
-      }
-  });
   user.save().then(function(){
+    let profile = new Profile();
+    profile.user = user._id
+    profile.save().then(() => {
+      const transporter = sendMail
+      transporter.sendMail(mails.welcome(req.body.user), (error, info) => {
+          if (error) {
+              return console.log(error);
+          }
+      });
+    })
     return res.json({user: user.toAuthJSON()});
   }).catch(next);
 });

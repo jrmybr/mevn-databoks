@@ -1,5 +1,6 @@
 <template>
   <div class="auth-page">
+    <RwvHeader></RwvHeader>
     <div class="container page">
           <div id="login-header">
             <h1> Welcome to Databoks </h1>
@@ -34,12 +35,15 @@
           </router-link>
         </div>
     </div>
+    <RwvFooter></RwvFooter>
   </div>
 </template>
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapGetters } from 'vuex'
 import { LOGIN } from '@/store/actions.type'
 import listErrors from '@/components/ListErrors'
+import RwvHeader from '@/components/TheHeader'
+import RwvFooter from '@/components/TheFooter'
 
 export default {
   name: 'RwvLogin',
@@ -53,16 +57,21 @@ export default {
     onSubmit (email, password) {
       this.$store
         .dispatch(LOGIN, { email, password })
-        .then(() => this.$router.push({ name: 'home' }))
+        .then(() => this.$router.push({ name: 'profile', params: {username: this.currentUser.username }}))
     }
   },
   computed: {
+    ...mapGetters([
+      'currentUser'
+    ]),
     ...mapState({
       errors: state => state.auth.errors
     })
   },
   components: {
-    listErrors
+    listErrors,
+    RwvHeader,
+    RwvFooter
   }
 }
 </script>

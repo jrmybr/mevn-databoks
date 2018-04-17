@@ -1,6 +1,7 @@
 var router = require('express').Router();
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
+var Profile = mongoose.model('Profile');
 var auth = require('../auth');
 
 // Preload user profile on routes with ':username'
@@ -15,39 +16,52 @@ router.param('username', function(req, res, next, username){
 });
 
 router.get('/:username', auth.optional, function(req, res, next){
-  if(req.payload){
-    User.findById(req.payload.id).then(function(user){
-      if(!user){ return res.json({profile: req.profile.toProfileJSONFor(false)}); }
-
-      return res.json({profile: req.profile.toProfileJSONFor(user)});
-    });
-  } else {
-    return res.json({profile: req.profile.toProfileJSONFor(false)});
-  }
+  console.log(req.params);
+  User.findOne({username: req.params.username}).then((cUser) => {
+    Profile.findOne({user: cUser.id}).populate('user').then((currentProfile) => {
+      return res.json({profile: currentProfile})
+    })
+  })
+  // if(req.payload){
+  //   User.findById(req.payload.id).then(function(user){
+  //     // console.log(user);
+  //     if(!user){ return res.json({profile: req.profile.toProfileJSONFor(false)}); }
+  //
+  //     return res.json({profile: req.profile.toProfileJSONFor(user)});
+  //   });
+  //
+  // //   Profile.findOne({user: req.payload.id}).populate('user').then((profile) => {
+  // //     console.log(profile);
+  // //     if(!profile){ return res.json({more: profile}); }
+  // //     return res.json({more: profile});
+  // //   })
+  // } else {
+  //   return res.json({profile: req.profile.toProfileJSONFor(false)});
+  // }
 });
 
-router.post('/:username/follow', auth.required, function(req, res, next){
-  var profileId = req.profile._id;
-
-  User.findById(req.payload.id).then(function(user){
-    if (!user) { return res.sendStatus(401); }
-
-    return user.follow(profileId).then(function(){
-      return res.json({profile: req.profile.toProfileJSONFor(user)});
-    });
-  }).catch(next);
-});
-
-router.delete('/:username/follow', auth.required, function(req, res, next){
-  var profileId = req.profile._id;
-
-  User.findById(req.payload.id).then(function(user){
-    if (!user) { return res.sendStatus(401); }
-
-    return user.unfollow(profileId).then(function(){
-      return res.json({profile: req.profile.toProfileJSONFor(user)});
-    });
-  }).catch(next);
-});
+// router.post('/:username/follow', auth.required, function(req, res, next){
+//   var profileId = req.profile._id;
+//
+//   User.findById(req.payload.id).then(function(user){
+//     if (!user) { return res.sendStatus(401); }
+//
+//     return user.follow(profileId).then(function(){
+//       return res.json({profile: req.profile.toProfileJSONFor(user)});
+//     });
+//   }).catch(next);
+// });
+//
+// router.delete('/:username/follow', auth.required, function(req, res, next){
+//   var profileId = req.profile._id;
+//
+//   User.findById(req.payload.id).then(function(user){
+//     if (!user) { return res.sendStatus(401); }
+//
+//     return user.unfollow(profileId).then(function(){
+//       return res.json({profile: req.profile.toProfileJSONFor(user)});
+//     });
+//   }).catch(next);
+// });
 
 module.exports = router;
