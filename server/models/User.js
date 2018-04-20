@@ -3,6 +3,7 @@ const uniqueValidator = require('mongoose-unique-validator');
 const crypto = require('crypto');
 const jwt = require('jsonwebtoken');
 const keys = require('../secret/keys');
+const Profile = require('./Profile');
 
 var UserSchema = new mongoose.Schema({
   // _id: mongoose.Schema.Types.ObjectId,
@@ -16,6 +17,8 @@ var UserSchema = new mongoose.Schema({
   address: {type: String, default: ''},
   codePostal: {type: String, default: ''},
   city: {type: String, default: ''},
+  birthday: {type: Date, default: Date.now()},
+  profile: {type: mongoose.Schema.Types.ObjectId, ref: 'Profile' }
 }, {timestamps: true});
 
 UserSchema.plugin(uniqueValidator, {message: 'is already taken.'});
@@ -61,7 +64,8 @@ UserSchema.methods.toProfileJSONFor = function(user){
     address: this.address,
     codePostal: this.codePostal,
     city: this.city,
-    fullname: this.getFullName()
+    fullname: this.getFullName(),
+    more: user.profile
     // firstConnection: this.firstConnection,
   };
 };

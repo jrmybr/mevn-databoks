@@ -17,27 +17,27 @@ router.param('username', function(req, res, next, username){
 
 router.get('/:username', auth.optional, function(req, res, next){
   console.log(req.params);
-  User.findOne({username: req.params.username}).then((cUser) => {
-    Profile.findOne({user: cUser.id}).populate('user').then((currentProfile) => {
-      return res.json({profile: currentProfile})
-    })
-  })
-  // if(req.payload){
-  //   User.findById(req.payload.id).then(function(user){
-  //     // console.log(user);
-  //     if(!user){ return res.json({profile: req.profile.toProfileJSONFor(false)}); }
-  //
-  //     return res.json({profile: req.profile.toProfileJSONFor(user)});
-  //   });
-  //
-  // //   Profile.findOne({user: req.payload.id}).populate('user').then((profile) => {
-  // //     console.log(profile);
-  // //     if(!profile){ return res.json({more: profile}); }
-  // //     return res.json({more: profile});
-  // //   })
-  // } else {
-  //   return res.json({profile: req.profile.toProfileJSONFor(false)});
-  // }
+  // User.findOne({username: req.params.username}).then((cUser) => {
+  //   Profile.findOne({user: cUser.id}).populate('user').then((currentProfile) => {
+  //     return res.json({profile: currentProfile})
+  //   })
+  // })
+  if(req.payload){
+    User.findById(req.payload.id).populate('profile').then(function(user){
+      // console.log(user);
+      if(!user){ return res.json({profile: req.profile.toProfileJSONFor(false)}); }
+
+      return res.json({profile: req.profile.toProfileJSONFor(user)});
+    });
+
+  //   Profile.findOne({user: req.payload.id}).populate('user').then((profile) => {
+  //     console.log(profile);
+  //     if(!profile){ return res.json({more: profile}); }
+  //     return res.json({more: profile});
+  //   })
+  } else {
+    return res.json({profile: req.profile.toProfileJSONFor(false)});
+  }
 });
 
 // router.post('/:username/follow', auth.required, function(req, res, next){
